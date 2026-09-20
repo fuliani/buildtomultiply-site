@@ -1,4 +1,4 @@
-/* Build to Multiply EN. Nothing the visitor types leaves the browser. */
+/* Build to Multiply PT. Nada do que o visitante digita sai do navegador. */
 (function () {
   'use strict';
 
@@ -18,7 +18,7 @@
       fill = document.getElementById('rx-fill'),
       count = document.getElementById('rx-count');
 
-  var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+  var money = function (n) { return '$' + Math.round(n).toLocaleString('pt-BR'); };
   var num = function (id) { var v = parseFloat((document.getElementById(id) || {}).value); return isNaN(v) ? 0 : v; };
   var radio = function (name) { var el = rx.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ''; };
 
@@ -26,9 +26,9 @@
     qs.forEach(function (q, k) { q.hidden = k !== i; });
     cur = i;
     back.hidden = i === 0;
-    next.textContent = i === total - 1 ? 'See my result' : 'Next';
+    next.textContent = i === total - 1 ? 'Ver o resultado' : 'Próxima';
     fill.style.width = ((i + 1) / total * 100) + '%';
-    count.textContent = (i + 1) + ' of ' + total;
+    count.textContent = (i + 1) + ' de ' + total;
   }
 
   // mostrar campos condicionais
@@ -68,30 +68,30 @@
     var matchPerdido = salario * gap / 100;
     total$ += matchPerdido;
     itens.push({
-      titulo: 'Unclaimed 401(k) match',
+      titulo: 'Match do 401(k) não capturado',
       valor: matchPerdido,
       desc: matchPerdido > 0
-        ? 'You contribute ' + contrib + '% and the match goes up to ' + match + '%' + (naoSeiMatch ? ' (an assumption, because you chose "I don\'t know")' : '') + '. The ' + gap.toFixed(1) + '% gap is employer money that stays behind.'
-        : 'You already contribute enough to get the full match. This is the most expensive item on the list and you have it handled.'
+        ? 'Você contribui ' + contrib + '% e o match vai até ' + match + '%' + (naoSeiMatch ? ' (hipótese, porque você marcou "não sei")' : '') + '. A diferença de ' + gap.toFixed(1) + '% do seu salário é dinheiro do empregador que fica lá.'
+        : 'Você já contribui o suficiente para pegar o match inteiro. Esse é o item mais caro da lista e você resolveu.'
     });
 
     // 2. HSA
     var hsa = radio('hsa'), hsaV = 0, hsaDesc = '';
-    if (hsa === 'naousa') { hsaV = Math.max(0, num('rx-hsa')); hsaDesc = 'Your employer contributes and you are not using it. It is money already approved for you.'; }
-    else if (hsa === 'usa') hsaDesc = 'You already use it. The HSA is the most tax-efficient account in the American system.';
-    else if (hsa === 'naosei') hsaDesc = 'Worth five minutes in your benefits portal to find out. Many people have one and do not know.';
-    else hsaDesc = 'Your plan does not offer one. Nothing to do here for now.';
+    if (hsa === 'naousa') { hsaV = Math.max(0, num('rx-hsa')); hsaDesc = 'Seu empregador deposita e você não está usando. É dinheiro já aprovado para você.'; }
+    else if (hsa === 'usa') hsaDesc = 'Você já usa. A HSA é a conta mais eficiente do sistema americano.';
+    else if (hsa === 'naosei') hsaDesc = 'Vale cinco minutos no portal de benefícios para descobrir. Muita gente tem e não sabe.';
+    else hsaDesc = 'Seu plano não oferece. Nada a fazer aqui por enquanto.';
     total$ += hsaV;
-    itens.push({ titulo: 'Unused employer HSA contribution', valor: hsaV, desc: hsaDesc });
+    itens.push({ titulo: 'Contribuição de HSA não usada', valor: hsaV, desc: hsaDesc });
 
     // 3. verba de educacao
     var edu = radio('edu'), eduV = 0, eduDesc = '';
-    if (edu === 'naousa') { eduV = Math.max(0, num('rx-edu')); eduDesc = 'A budget that exists and goes back to the company if you do not use it. It often pays for certifications and courses.'; }
-    else if (edu === 'usa') eduDesc = 'You already use it. It is the cheapest way to raise your market value.';
-    else if (edu === 'naosei') eduDesc = 'Ask HR about tuition reimbursement or an education stipend. It is common and underused.';
-    else eduDesc = 'Your company does not offer one.';
+    if (edu === 'naousa') { eduV = Math.max(0, num('rx-edu')); eduDesc = 'Verba que existe e volta para a empresa se você não usar. Costuma pagar certificação, curso e às vezes inglês.'; }
+    else if (edu === 'usa') eduDesc = 'Você já usa. É a forma mais barata de aumentar o seu valor de mercado.';
+    else if (edu === 'naosei') eduDesc = 'Pergunte ao RH: tuition reimbursement ou education stipend. É comum e pouco usado.';
+    else eduDesc = 'Sua empresa não oferece.';
     total$ += eduV;
-    itens.push({ titulo: 'Unused education budget', valor: eduV, desc: eduDesc });
+    itens.push({ titulo: 'Verba de educação não usada', valor: eduV, desc: eduDesc });
 
     // 4 e 5: nao entram na soma, porque seriam chute. Entram como alerta.
     var nuncaNegociou = radio('neg') === 'nao';
@@ -99,8 +99,8 @@
 
     document.getElementById('rx-total').textContent = money(total$);
     document.getElementById('rx-sub').textContent = total$ > 0
-      ? 'This is the estimate of what is being left behind each year, adding up only what you entered. It does not include salary, because that would be a guess.'
-      : 'Based on what you entered, you are not leaving obvious money on the table. That is rare. The two items below still apply.';
+      ? 'É a estimativa do que está ficando para trás por ano, somando só o que você informou. Não inclui salário, porque isso seria chute.'
+      : 'Pelo que você informou, você não está deixando dinheiro óbvio na mesa. Isso é raro. As duas frentes abaixo continuam valendo.';
 
     document.getElementById('rx-breakdown').innerHTML = itens.map(function (i) {
       return '<li><span class="bl">' + i.titulo + '<span class="bd">' + i.desc + '</span></span>' +
@@ -113,7 +113,7 @@
       var r = 0.07, linhas = '';
       [5, 10, 20].forEach(function (anos) {
         var fv = total$ * ((Math.pow(1 + r, anos) - 1) / r);
-        linhas += '<tr><td>' + anos + ' years</td><td>' + money(fv) + '</td></tr>';
+        linhas += '<tr><td>' + anos + ' anos</td><td>' + money(fv) + '</td></tr>';
       });
       comp.innerHTML = linhas;
       comp.closest('.compound').hidden = false;
@@ -123,16 +123,16 @@
 
     // proximos passos
     var passos = [];
-    if (matchPerdido > 0) passos.push(['Raise your contribution to ' + match + '%', 'It is the only decision on this list with a guaranteed same-day return. It takes five minutes in your 401(k) portal.']);
-    if (naoSeiMatch) passos.push(['Find out your real match', 'Look for "401(k) match" or "employer contribution" in your benefits summary. 4% was used as an assumption, and your reality may be quite different.']);
-    if (hsa === 'naousa' || hsa === 'naosei') passos.push(['Open and use the HSA', 'If you are on a high-deductible plan, it is the only account that can be tax-free going in, while it grows, and coming out for qualified medical expenses.']);
-    if (edu === 'naousa' || edu === 'naosei') passos.push(['Spend the education budget this year', 'It does not roll over. If you do not use it, it goes back to the company on December 31 under most plans.']);
-    if (nuncaNegociou) passos.push(['Prepare a pay conversation', 'Never having negotiated is the most expensive item that cannot be calculated here, because base salary is what raises, bonus and match are all calculated from.']);
-    if (naoSabeFaixa) passos.push(['Find the pay range for your level', 'Every mid-size or large company has a minimum, midpoint and maximum per level. Knowing where you sit changes the raise conversation completely.']);
-    if (!passos.length) passos.push(['You are ahead of most people', 'The next step is the Control stage: know your savings rate and automate your margin.']);
+    if (matchPerdido > 0) passos.push(['Aumente sua contribuição até ' + match + '%', 'É a única decisão desta lista que dá retorno garantido no mesmo dia. Leva cinco minutos no portal do 401(k).']);
+    if (naoSeiMatch) passos.push(['Descubra o match de verdade', 'Procure "401(k) match" ou "employer contribution" no seu resumo de benefícios. Usei 4% como hipótese, e a sua realidade pode ser bem diferente.']);
+    if (hsa === 'naousa' || hsa === 'naosei') passos.push(['Abra e use a HSA', 'Se o seu plano é de franquia alta, é a única conta que pode ser isenta de imposto na entrada, no crescimento e na saída para despesa médica.']);
+    if (edu === 'naousa' || edu === 'naosei') passos.push(['Gaste a verba de educação este ano', 'Ela não acumula. Se não usar, volta para a empresa em 31 de dezembro na maioria dos planos.']);
+    if (nuncaNegociou) passos.push(['Prepare uma conversa de salário', 'Nunca ter negociado é o item mais caro que não dá para calcular aqui, porque o salário base é a conta de onde saem aumento, bônus e match.']);
+    if (naoSabeFaixa) passos.push(['Descubra a faixa do seu nível', 'Toda empresa média ou grande tem mínimo, ponto médio e máximo por nível. Saber onde você está muda completamente a conversa de aumento.']);
+    if (!passos.length) passos.push(['Você está na frente da maioria', 'O próximo passo é a etapa Controlar: saber sua taxa de poupança e automatizar a margem.']);
 
     document.getElementById('rx-next-steps').innerHTML =
-      '<h3>What to do now, in order</h3>' + passos.map(function (p) {
+      '<h3>O que fazer agora, em ordem</h3>' + passos.map(function (p) {
         return '<div class="step-card"><strong>' + p[0] + '</strong><span>' + p[1] + '</span></div>';
       }).join('');
 
