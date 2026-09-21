@@ -143,3 +143,31 @@
 
   show(0);
 })();
+
+/* ---- MailerLite: newsletter goes straight to the list; community waitlist is also added (Formspree still emails the answers) ---- */
+(function(){
+  var ML='https://assets.mailerlite.com/jsonp/2421436/forms/189845758067869550/subscribe';
+  function send(email,name,lang){
+    var d=new URLSearchParams(); d.append('fields[email]',email); if(name)d.append('fields[name]',name);
+    d.append('ml-submit','1'); d.append('anticsrf','true');
+    try{ return fetch(ML,{method:'POST',mode:'no-cors',keepalive:true,body:d}); }catch(e){ return Promise.resolve(); }
+  }
+  var lang=document.documentElement.lang||'en';
+  document.querySelectorAll('form.nl-form').forEach(function(f){
+    f.addEventListener('submit',function(ev){
+      ev.preventDefault();
+      var i=f.querySelector('input[type=email]'); if(!i||!i.value)return;
+      if(f.querySelector('[name=_gotcha]')&&f.querySelector('[name=_gotcha]').value)return;
+      send(i.value,'',lang).then(function(){
+        f.innerHTML='<p class="nl-ok"><strong>'+(lang.indexOf('pt')===0?'Pronto! Confira o seu e-mail.':'Done! Check your inbox.')+'</strong></p>';
+        if(typeof gtag==='function')gtag('event','newsletter_signup',{page_lang:lang});
+      });
+    });
+  });
+  document.querySelectorAll('form.contact-form').forEach(function(f){
+    f.addEventListener('submit',function(){
+      var e=f.querySelector('input[type=email]'),n=f.querySelector('input[name=nome]');
+      if(e&&e.value){ send(e.value,n?n.value:'',lang); if(typeof gtag==='function')gtag('event','waitlist_signup',{page_lang:lang}); }
+    });
+  });
+})();
