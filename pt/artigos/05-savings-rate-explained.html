@@ -15,8 +15,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../site.css?v=1789949768">
+<link rel="stylesheet" href="../site.css?v=1789951246">
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MV734B8NLZ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MV734B8NLZ');document.addEventListener('click',function(ev){
+  var a=ev.target.closest&&ev.target.closest('a,button'); if(!a||typeof gtag!=='function')return;
+  var href=a.getAttribute('href')||'', label=(a.textContent||'').trim().slice(0,80), name=null, extra={};
+  if(/payhip\.com/.test(href)) name='checkout_click';
+  else if(/calendly\.com/.test(href)) name='booking_click';
+  else if(a.closest('.lang')) {name='language_switch'; extra.to=a.getAttribute('hreflang')||'';}
+  else if(/\/downloads\/|\.(pdf|xlsx|csv)(\?|$)/i.test(href)) name='file_download';
+  else if(/instagram\.com|facebook\.com/.test(href)) name='social_click';
+  else if(/^https?:\/\//.test(href)&&href.indexOf(location.hostname)<0) name='outbound_click';
+  else if(/cta-main|btn/.test(a.className||'')) name='cta_click';
+  if(!name)return;
+  extra.event_category='engagement'; extra.event_label=label; extra.link_url=href; extra.page_lang=document.documentElement.lang||'';
+  gtag('event',name,extra);
+},true);</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Ir para o conteúdo</a>
@@ -108,5 +123,5 @@
   </div>
   <div class="footer-bottom"><p>&copy; 2026 Build to Multiply.</p><p>Conteúdo educacional. Build to Multiply não presta consultoria financeira, de investimentos, tributária ou jurídica personalizada. As calculadoras mostram estimativas a partir do que você digita e não são previsões nem garantias.</p></div>
 </div></footer>
-<script src="../site.js?v=1789949768"></script>
+<script src="../site.js?v=1789951246"></script>
 </body></html>
